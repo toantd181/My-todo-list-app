@@ -13,7 +13,7 @@ func Connect(cfg config.DatabaseConfig) (*sql.DB, error) {
 	connStr := fmt.Sprintf(
 		"host = %s port = %s user = %s password = %s dbname = %s sslmode = %s",
 		cfg.Host,
-		cfg.Post,
+		cfg.Port,
 		cfg.User,
 		cfg.Password,
 		cfg.DBName,

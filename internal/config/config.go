@@ -14,7 +14,6 @@ type Config struct {
 type AppConfig struct {
 	Environment string
 	Port        string
-	DataDir     string
 }
 
 type DatabaseConfig struct {
@@ -28,13 +27,11 @@ type DatabaseConfig struct {
 }
 
 func Load() *Config {
-	DataDir := getDataDirectory()
 
 	return &Config{
 		App: AppConfig{
 			Environment: getEnv("APP_ENV", "development"),
 			Port:        getEnv("PORT", "8080"),
-			DataDir:     dataDir,
 		},
 		Database: DatabaseConfig{
 			Host:     getEnv("DB_HOST", "localhost"),
@@ -43,12 +40,11 @@ func Load() *Config {
 			Password: getEnv("DB_PASSWORD", ""),
 			DBName:   getEnv("DB_NAME", "todo_app"),
 			SSLMode:  getEnv("DB_SSLMODE", "disable"),
-			DataPath: filepath.Join(dataDir, "todos.db"),
 		},
 	}
 }
 
-func getEnv(ket, defaultValue string) string {
+func getEnv(key, defaultValue string) string {
 	if value := os.Getenv(key); value != "" {
 		return value
 	}

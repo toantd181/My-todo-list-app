@@ -1,16 +1,19 @@
 package routes
 
-import(
+import (
 	"database/sql"
-	"github.com/gin-gonic/gin"
 	"todo-app/internal/handlers"
+
+	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(router *gin.Engine, db *sql.DB){
+func SetupRoutes(router *gin.Engine, db *sql.DB) {
 	todoHandler := handlers.NewTodoHandler(db)
 
-	api := router.Group("/api"){
-		todos := api.Group("/todos"){
+	api := router.Group("/api")
+	{
+		todos := api.Group("/todos")
+		{
 			todos.GET("", todoHandler.GetTodos)
 			todos.POST("", todoHandler.CreateTodo)
 			todos.PUT("/:id", todoHandler.UpdateTodo)
@@ -19,9 +22,9 @@ func SetupRoutes(router *gin.Engine, db *sql.DB){
 		}
 	}
 
-	router.GET("/health", func(c * gin.Context){
+	router.GET("/health", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"status": "ok",
+			"status":  "ok",
 			"message": "Todo App API is running",
 		})
 	})
