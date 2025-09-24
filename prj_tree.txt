@@ -1,0 +1,32 @@
+todo-app/
+├── cmd/
+│   └── server/
+│       └── main.go                 # Application entry point
+├── internal/                       # Private application code
+│   ├── config/
+│   │   └── config.go              # Database and app configuration
+│   ├── database/
+│   │   └── connection.go          # Database connection setup
+│   ├── handlers/
+│   │   └── todo_handler.go        # API route handlers (from previous artifact)
+│   ├── models/
+│   │   └── todo.go               # Data models and structs (from previous artifact)
+│   └── routes/
+│       └── routes.go             # Route definitions
+├── migrations/                    # Database migration files
+│   ├── 001_create_todos_table.sql # Your database schema (from DBeaver)
+│   └── 002_add_indexes.sql       # Additional migrations
+├── pkg/                          # Public library code (if needed)
+├── scripts/                      # Utility scripts
+│   └── run_migrations.sh         # Script to run database migrations
+├── configs/                      # Configuration files
+│   ├── app.yaml                  # Application config
+│   └── database.yaml             # Database config
+├── docs/                         # Documentation
+│   └── api.md                    # API documentation
+├── .env                          # Environment variables
+├── .gitignore                    # Git ignore file
+├── go.mod                        # Go module file
+├── go.sum                        # Go dependencies checksum
+├── Makefile                      # Build and run commands
+└── README.md                     # Project documentation
