@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+
 	"todo-app/internal/config"
 	"todo-app/internal/database"
 	"todo-app/internal/routes"
@@ -19,6 +20,10 @@ func main() {
 	// Load configuration
 	cfg := config.Load()
 
+	// Debug: Print database config (remove password for security)
+	log.Printf("Database config - Host: %s, Port: %s, User: %s, DBName: %s",
+		cfg.Database.Host, cfg.Database.Port, cfg.Database.User, cfg.Database.DBName)
+
 	// Setup database connection
 	db, err := database.Connect(cfg.Database)
 	if err != nil {
@@ -32,6 +37,16 @@ func main() {
 	}
 
 	log.Println("Database connected successfully")
+
+	// Test if todos table exists
+	var count int
+	err = db.QueryRow("SELECT COUNT(*) FROM todos").Scan(&count)
+	if err != nil {
+		log.Printf("Warning: Could not query todos table: %v", err)
+		log.Println("Make sure you've created the todos table in your database")
+	} else {
+		log.Printf("Todos table exists with %d records", count)
+	}
 
 	// Setup Gin router
 	if cfg.App.Environment == "production" {
